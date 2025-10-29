@@ -1,0 +1,23 @@
+The mean outcome_cvd rate by intervention group is:
+
+                    outcome_cvd
+intervention_group             
+control                0.336530
+treatment a            0.319482
+treatment b            0.333633
+
+The mean adherence_pct by intervention group is:
+
+                    adherence_pct
+intervention_group               
+control                 60.621688
+treatment a             60.210173
+treatment b             61.009404
+
+The dropout counts by intervention group are:
+
+dropout               no  yes
+intervention_group           
+control             2831  506
+treatment a         2831  490
+treatment b         2871  471
