@@ -136,6 +136,6 @@ if __name__ == '__main__':
     print(config)
     validation = validate_config(config)
     print(validation)
-    generate_sample_data('sample_data.csv', config)
+    generate_sample_data('data/sample_data.csv', config)
     stats = calculate_statistics([10, 20, 30, 40, 50])
-    print(stats)
+    print(stats, file=open('output/statistics.txt', 'w'))
