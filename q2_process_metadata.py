@@ -1,6 +1,9 @@
 # TODO: Add shebang line: #!/usr/bin/env python3
 # Assignment 5, Question 2: Python Data Processing
 # Process configuration files for data generation.
+#!/usr/bin/env python3
+
+from numpy import mean, median
 
 
 def parse_config(filepath: str) -> dict:
@@ -19,9 +22,18 @@ def parse_config(filepath: str) -> dict:
         '100'
     """
     # TODO: Read file, split on '=', create dict
-    pass
-
-
+    with open(filepath, 'r') as file:
+        content = file.read()
+        file_content = content.splitlines()
+        create_dict = {}
+        for i in file_content:
+            results = i.split('=')
+            key = results[0]
+            value = results[1]
+            create_dict[key] = value
+        return create_dict
+   
+        
 def validate_config(config: dict) -> dict:
     """
     Validate configuration values using if/elif/else logic.
@@ -44,7 +56,14 @@ def validate_config(config: dict) -> dict:
         True
     """
     # TODO: Implement with if/elif/else
-    pass
+    create_dict = {}
+    if int(config['sample_data_rows']) > 0:
+        create_dict["sample_data_rows"] = True
+    if int(config['sample_data_min']) >= 1:
+        create_dict["sample_data_min"] = True
+    if int(config['sample_data_max']) > int(config['sample_data_min']):
+        create_dict["sample_data_max"] = True
+    return create_dict
 
 
 def generate_sample_data(filename: str, config: dict) -> None:
@@ -69,7 +88,14 @@ def generate_sample_data(filename: str, config: dict) -> None:
     # TODO: Parse config values (convert strings to int)
     # TODO: Generate random numbers and save to file
     # TODO: Use random module with config-specified range
-    pass
+    import random
+    sample_data_rows = config['sample_data_rows']
+    min_num = config['sample_data_min']
+    max_num = config['sample_data_max']
+    with open(filename, 'w') as file:
+        for i in range(int(sample_data_rows)):
+            random_int = random.randint(int(min_num), int(max_num))
+            print(random_int, file=file)
 
 
 def calculate_statistics(data: list) -> dict:
@@ -88,7 +114,13 @@ def calculate_statistics(data: list) -> dict:
         30.0
     """
     # TODO: Calculate stats
-    pass
+    create_dict = {}
+    create_dict['mean'] = float(mean(data))
+    create_dict['median'] = float(median(data))
+    create_dict['sum'] = sum(data)
+    create_dict['count'] = len(data)
+    return create_dict
+
 
 
 if __name__ == '__main__':
@@ -100,4 +132,10 @@ if __name__ == '__main__':
     # 
     # TODO: Read the generated file and calculate statistics
     # TODO: Save statistics to output/statistics.txt
-    pass
+    config = parse_config('q2_config.txt')
+    print(config)
+    validation = validate_config(config)
+    print(validation)
+    generate_sample_data('sample_data.csv', config)
+    stats = calculate_statistics([10, 20, 30, 40, 50])
+    print(stats)
